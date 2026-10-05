@@ -1,0 +1,39 @@
+@ApiPractice_HostAddress = http://localhost:5223
+
+GET {{ApiPractice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+### GET ALL Product
+GET {{ApiPractice_HostAddress}}/inventory/products/
+Accept: application/json
+
+### Get product by Id
+GET {{ApiPractice_HostAddress}}/inventory/products/2
+Accept: application/json
+
+### Create Product
+POST {{ApiPractice_HostAddress}}/inventory/products/
+Content-Type: application/json
+
+{
+    "name": "Wireless Mouse",
+    "price": 19.99,
+    "cost": 7.82,
+    "desiredOnHand": 50,
+    "onHand": 39
+}
+
+### Update Product
+PUT {{ApiPractice_HostAddress}}/inventory/products/2
+Content-Type: application/json
+{
+    "name": "Wireless Mouse",
+    "price": 21,
+    "cost": 7.82,
+    "desiredOnHand": 50,
+    "onHand": 39
+}
+### Update Product
+DELETE {{ApiPractice_HostAddress}}/inventory/products/1
+
+

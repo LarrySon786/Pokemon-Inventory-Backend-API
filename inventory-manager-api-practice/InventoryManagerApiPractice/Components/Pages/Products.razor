@@ -1,0 +1,86 @@
+@page "/products"
+@using System.ComponentModel.DataAnnotations
+@using InventoryManagerApiPractice.Models
+@using InventoryManagerApiPractice.Services
+@rendermode InteractiveServer
+@inject ProductApiService productApi
+
+
+
+
+
+<EditForm Model="Product" OnValidSubmit="HandleSubmit" FormName="Product Creation">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label class="form-label">Name</label>
+        <InputText class="form-control" @bind-Value="Product.Name" />
+    </div>  
+
+    <div class="form-group">
+        <label class="form-label">Price</label>
+        <InputNumber class="form-control" @bind-Value="Product.Price" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Cost</label>
+        <InputNumber class="form-control" @bind-Value="Product.Cost" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">On Hand</label>
+        <InputNumber class="form-control" @bind-Value="Product.OnHand" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Desired On Hand</label>
+        <InputNumber class="form-control" @bind-Value="Product.DesiredOnHand" />
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Error))
+    {
+        <p class="alert">@Error</p>
+    }
+    else if (!string.IsNullOrWhiteSpace(Message))
+    {
+        <p class="success">@Message</p>
+    }
+
+    <button class="btn btn-primary" type="submit">Create Product</button>
+
+</EditForm>
+
+
+@code {
+    private Product Product { get; set; } = new();
+    private string Error { get; set; } = string.Empty;
+    private string Message { get; set; } = string.Empty;
+
+
+    private async Task HandleSubmit()
+    {
+        ResetMessages();
+        try
+        {
+            var entity = await productApi.CreateProduct(Product);
+            Message = "Successful Save!";
+        }
+        catch (ValidationException ex)
+        {
+            Error = ex.Message;
+        }
+        catch (Exception ex)
+        {
+            Error = "Something went wrong. Please try again";
+            Console.WriteLine($"Could not create product. Ex: {ex}");
+        }
+    }
+
+    private void ResetMessages()
+    {
+        Message = string.Empty;
+        Error = string.Empty;
+    }
+
+}

@@ -1,0 +1,19 @@
+@PokemonApiPractice_HostAddress = https://pokeapi.co/api/v2/
+
+### GET
+
+GET {{PokemonApiPractice_HostAddress}}/pokemon/squirtle/
+Accept: application/json
+
+### GET
+
+GET {{PokemonApiPractice_HostAddress}}/pokemon-form/7/
+Accept: application/json
+
+
+id
+name
+
+forms
+moves
+sprites -> other -> showdown

@@ -1,0 +1,19 @@
+@ProductApiPractice_HostAddress = http://localhost:5223
+
+### Get All Products
+GET {{ProductApiPractice_HostAddress}}/inventory/products/
+Accept: application/json
+
+
+### Create Product
+POST {{ProductApiPractice_HostAddress}}/inventory/products/
+Content-Type: application/json 
+
+{
+    "Name": "Book of Mormon",
+    "Price" : 1.00,
+    "Cost": 0.90,
+    "OnHand": 100,
+    "DesiredOnHand": 125
+}
+

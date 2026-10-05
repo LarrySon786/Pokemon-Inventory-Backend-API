@@ -1,0 +1,71 @@
+@page "/pokemon"
+@rendermode InteractiveServer
+@using InventoryManagerApiPractice.Services
+@using InventoryManagerApiPractice.Models
+@inject PokemonApiService pokeApi
+
+
+<EditForm Model="PokemonName" OnValidSubmit="HandleSubmit" FormName="Choose your pokemon">
+    <label class="form-label">Enter Pokemon's name</label>
+    <InputText class="form-control" @bind-Value="PokemonName" />
+    <button class="btn btn-primary" type="submit">Start Battle!</button>
+</EditForm>
+
+@if (Pokemon != null)
+{
+    <div class="battle">
+        @* Front View *@
+        <div class="opponent">
+            <img src="@Pokemon.Sprites.Other.Showdown.Front_Default" alt="@Pokemon.Name Front View" width="150"/>
+        </div>
+
+        @* Back view *@
+        <div class="you">
+            <img src="@Pokemon.Sprites.Other.Showdown.Back_Default" alt="@Pokemon.Name Back View" width="200" />
+        </div>
+    </div>
+}
+
+
+
+@code {
+    private string PokemonName { get; set; } = string.Empty;
+    private Pokemon? Pokemon { get; set; }
+    private string Error { get; set; } = string.Empty;
+    private string Success { get; set; } = string.Empty;
+
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            Pokemon = await pokeApi.GetByName(PokemonName);
+            Success = "Success!";
+        }
+        catch (Exception ex)
+        {
+            Error = "Failed to find the pokemon.";
+            Console.WriteLine($"Could not find pokemon. Ex: {ex}");
+        }
+    }
+
+
+
+}
+
+
+<style>
+    .battle {
+        display:grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: 1fr 1fr;
+        margin-left:20rem;
+        margin-right:20rem;
+    }
+    .opponent {
+        grid-column: 3/4;
+    }
+    .you {
+        grid-column: 2/3;
+    }
+</style>

@@ -8,5 +8,6 @@ public class ProjectDbConnection : DbContext
     }
 
     public DbSet<Product> ProductDb { get; set; }
+    public DbSet<StaffMember> StaffMembersDb { get; set; }
 
 }
